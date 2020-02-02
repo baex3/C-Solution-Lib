@@ -1,0 +1,411 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+/// <Summary>
+/// Author: Odera Eneugwu
+/// 
+/// This is a programming library of solutions to the exercises in the book
+/// Fundamentals of C# by Svetlin Nakov & Veselin Kolev & Co.
+/// The scope of the code is intended to solve the problems but NOT NECESSARILY to implement advanced 
+/// techniques such as defensive programming found in market ready solutions
+/// 
+/// Topic: Arrays
+/// </Summary>
+
+namespace IntroToCSharp
+{
+    class Arrays
+    {
+        public static void Exercises7()
+        {
+            //////////1.//////////////
+            ///Write a program, which creates an array of 20 elements of type integer and initializes each of the elements with a 
+            ///value equals to the index of the element multiplied by 5. Print the elements to the console.
+
+            Console.WriteLine("We will display the value of an array of integers multiplied by five up to the integer 20: ");
+            int[] arr1 = new int[20];
+
+            for (int index = 0; index < arr1.Length; index++)
+            {
+                arr1[index] = index * 5;
+            }
+
+            for (int index = 0; index < arr1.Length; index++)
+            {
+                Console.Write(arr1[index] + " ");
+            }
+
+            Console.Write("\n\n");
+
+            ////////////2.//////////////
+            //Write a program, which reads two arrays from the console and checks whether they are equal(two arrays are equal
+            //when they are of equal length and all of their elements, which have the same index, are equal).
+
+            Console.WriteLine("Now we will compare two arrays of integers that you input to check if they are equal: ");
+            int[] set1 = new int[4], set2 = new int[4];
+            bool bad = false;
+            Console.WriteLine("Enter Set 1: ");
+            for (int y = 0; y < 4; y++)
+            {
+                set1[y] = Convert.ToInt32(Console.ReadLine());
+            }
+            Console.WriteLine("Enter Set 2: ");
+            for (int y = 0; y < 4; y++)
+            {
+                set2[y] = Convert.ToInt32(Console.ReadLine());
+            }
+
+            for (int u = 0; u < 4; u++)
+            {
+                if (set1[u] != set2[u])
+                {
+                    Console.WriteLine("The two arrays entered are Not equal!");
+                    bad = true;
+                    break;
+                }
+                if ((bad == false) && (u + 1 == 4)) Console.WriteLine("The two arrays are equal");
+            }
+
+            ////////////3.//////////////
+            //Write a program, which compares two arrays of type char lexicographically(character by character) and checks,
+            //which one is first in the lexicographical order.
+
+             Console.WriteLine("Now we will compare two arrays of characters that you input to check which would be first in order: ");
+            char[] set31 = new char[4], set32 = new char[4];
+            bool bad3 = false;
+            Console.WriteLine("Enter Set 1: ");
+            for (int y = 0; y < 4; y++)
+            {
+                set31[y] = Convert.ToChar(Console.ReadLine());
+            }
+            Console.WriteLine("Enter Set 2: ");
+            for (int y = 0; y < 4; y++)
+            {
+                set32[y] = Convert.ToChar(Console.ReadLine());
+            }
+
+            for (int u = 0; u < 4; u++)
+            {
+                if (set31[u] == set32[u])
+                {
+                    bad3 = true;
+                    continue;
+                }
+                else if (set31[u] > set32[u])
+                {
+                    Console.WriteLine("Set 2 comes first in lexicographical order");
+                    break;
+                }
+                else if (set31[u] < set32[u])
+                {
+                    Console.WriteLine("Set 1 comes first in lexicographical order");
+                    break;
+                }
+
+                if (bad3 == false && (u + 1 == 4)) Console.WriteLine("Both char arrays are equal.");
+            }
+
+            //////////4.//////////////
+            //Write a program, which finds the maximal sequence of consecutive equal elements in an array. E.g.: { 1, 1, 2, 3, 2, 2, 2, 1}  { 2, 2, 2}.
+
+            Console.WriteLine("Now we determine the maximum set of numbers from an array of 10 digits");
+            int[] set41 = new int[10], poc = new int[10], repetitions = new int[10];
+            int count = 1, repNdx = 0, maxRepeated = 0;
+            for (int ndx = 0; ndx < set41.Length; ndx++)
+            {
+                set41[ndx] = Convert.ToInt32(Console.ReadLine());
+                if (ndx > 0)
+                {
+                    if (set41[ndx] == set41[ndx - 1])
+                    {
+                        count++;
+                    }
+                    else if (count > 0)
+                    {
+                        poc[repNdx] = set41[ndx - 1];
+                        repetitions[repNdx] = count;
+                        if (repetitions[repNdx] == repetitions.Max())
+                        {
+                            maxRepeated = set41[ndx - 1];
+                        }
+                        repNdx++;
+                        count = 0;
+                    }
+                    else count = 1;
+                }
+            }
+
+            Console.Write("{ ");
+            for (int ndx = 0; ndx < set41.Length; ndx++)
+            {
+                if (ndx + 1 == set41.Length) Console.Write(set41[ndx] + " ");
+                else Console.Write(set41[ndx] + ", ");
+            }
+            Console.Write(" } \n\n");
+
+            Console.Write("{ ");
+
+            for (int ndx = 0; ndx < repetitions.Max(); ndx++)
+            {
+                Console.Write(maxRepeated + " ");
+            }
+            Console.Write("}\n\n");
+
+            //////////5.//////////////
+            //Write a program, which finds the maximal sequence of consecutively placed increasing integers.Example: { 3, 2, 3, 4, 2, 2, 4}  { 2, 3, 4}.
+
+            Console.WriteLine("Now we determine the maximum set of ascending numbers from an array of 10 digits");
+            int[] set51 = new int[10], finalMaxAscending = new int[10], increments = new int[10];
+            int count5 = 0, incNdx = 0, maxIncrement = 0;
+            for (int ndx = 0; ndx < set51.Length; ndx++)
+            {
+                set51[ndx] = Convert.ToInt32(Console.ReadLine());
+                if (ndx > 0)
+                {
+                    if (set51[ndx] == (set51[ndx - 1] + 1))
+                    {
+                        count5++;
+                        if (count5 == 1)
+                        {
+                            increments[count5 - 1] = set51[ndx - 1];
+                            increments[count5] = set51[ndx];
+                        }
+                        else
+                        {
+                            increments[count5] = set51[ndx];
+                        }
+
+                        if (count5 > maxIncrement)
+                        {
+                            for (int p = 0; p < increments.Length; p++)
+                            {
+                                finalMaxAscending[p] = increments[p];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (count5 > maxIncrement) maxIncrement = count5;
+                        count5 = 0;
+                    }
+                }
+            }
+
+            Console.Write("{ ");
+            for (int ndx = 0; ndx < set51.Length; ndx++)
+            {
+                if (ndx + 1 == set51.Length) Console.Write(set51[ndx] + " ");
+                else Console.Write(set51[ndx] + ", ");
+            }
+            Console.Write(" } \n\n");
+
+            Console.Write("{ ");
+            for (int ndx = 0; ndx <= maxIncrement; ndx++)
+            {
+                if (ndx == maxIncrement) Console.Write(finalMaxAscending[ndx] + " ");
+                else Console.Write(finalMaxAscending[ndx] + ", ");
+            }
+            Console.Write("}\n\n");
+
+            //////////6.//////////////
+            //Write a program, which finds the maximal sequence of increasing elements in an array arr[n].
+            //It is not necessary the elements to be consecutively placed. E.g.: { 9, 6, 2, 7, 4, 7, 6, 5, 8, 4}  { 2, 4, 6, 8}.
+
+            Console.WriteLine("Now we determine the maximum set of ascending numbers from an array of 10 digits, but entered in no particular order:");
+            int[] set61 = new int[10], arrOfNumberOfasc = new int[9], incrementsNdx = new int[10];
+            int count6 = 0, incNdx6 = 1, maxIncrement1 = 0, maxNdx = 10;
+            for (int ndx = 0; ndx < set61.Length; ndx++)
+            {
+                set61[ndx] = Convert.ToInt32(Console.ReadLine());
+            }
+
+            for (int w = 0; w < set61.Length; w++)
+            {
+                incrementsNdx[w] = set61[w];
+
+                for (int digits = incNdx6++; digits < set61.Length - 1; digits++)
+                {
+
+                    if (set61[digits] > incrementsNdx[w])
+                    {
+                        maxIncrement1 = set61[digits];
+                    }
+                    if (maxIncrement1 > incrementsNdx[w])
+                    {
+                        count6++;
+                    }
+
+                }
+                arrOfNumberOfasc[w] = count6;
+                count6 = 0;
+
+            }
+
+            for (int w = 0; w < set61.Length; w++)
+            {
+                incrementsNdx[w] = set61[w];
+                maxIncrement1 = set61[w];
+                for (int digits = incNdx6; digits < maxNdx; digits++)
+                {
+                    //check each digit from after the first digit to see many are in ascending order
+
+                    if (maxIncrement1 < set61[digits])
+                    {
+                        maxIncrement1 = set61[digits];
+                        count6++;
+                    }
+                }
+                maxNdx--;
+                arrOfNumberOfasc[w] = count6;
+                count6 = 0;
+            }
+
+            Console.Write("{ ");
+            for (int ndx = 0; ndx < set61.Length; ndx++)
+            {
+                if (ndx + 1 == set61.Length) Console.Write(set61[ndx] + " ");
+                else Console.Write(set61[ndx] + ", ");
+            }
+            Console.Write(" } \n\n");
+
+            Console.Write("{ ");
+            for (int ndx = Array.IndexOf(arrOfNumberOfasc, arrOfNumberOfasc.Max()); ndx < arrOfNumberOfasc.Max(); ndx++)
+            {
+                if (ndx == arrOfNumberOfasc.Max())
+                {
+                    if (incrementsNdx[ndx] > set61[Array.IndexOf(arrOfNumberOfasc, arrOfNumberOfasc.Max())])
+                        Console.Write(incrementsNdx[ndx] + " ");
+                }
+                else
+                {
+                    if (incrementsNdx[ndx] > maxIncrement1)
+                    {
+                        maxIncrement1 = incrementsNdx[ndx];
+                        Console.Write(maxIncrement1 + ", ");
+                    }
+
+                }
+            }
+            Console.Write("}\n\n");
+
+            ////////7.//////////////
+            //Write a program, which reads from the console two integer numbers N and K(K<N) and array of N integers.
+            //Find those K consecutive elements in the array, which have maximal sum.
+
+            int N, K = 0;
+            Console.WriteLine("Now we will determine the sequence of K consecutive numbers that result in the maximal sum from an array of N integers, where K < N\n");
+
+            do
+            {
+                Console.WriteLine("Enter a value N, representing the size of the array:\n");
+                N = int.Parse(Console.ReadLine());
+                int[] arr7 = new int[N];
+                Console.WriteLine("\nEnter a value K where 1 < K < N, representing the number of consecutive integers to evaluate their sum:\n");
+                K = int.Parse(Console.ReadLine());
+                int[] Max_Sum_Numbers = new int[K];
+
+
+                //List<int> Max_Sum_Numbers = new List<int>();
+
+                if ((K < N) && (K > 1))
+                {
+                    int input;
+                    Console.WriteLine("\nNow enter the integers in the array of N integers\n");
+                    for (int x = 0; x < N; x++)
+                    {
+                        Console.Write("{0}: ", x + 1);
+                        input = int.Parse(Console.ReadLine());
+                        arr7[x] = input;
+                    }
+                    //Check each combination of sequences starting from index = 0
+                    int newMax = 0, currentMax, temp_ndx;
+
+                    for (int seq_ndx = 0; seq_ndx < (N - K) + 1; seq_ndx++)
+                    {
+                        currentMax = 0;
+                        for (int ndx = seq_ndx; ndx < seq_ndx + K; ndx++)
+                        {
+                            currentMax += arr7[ndx];
+                        }
+                        if (seq_ndx == 0)
+                            newMax = currentMax;
+                        if (newMax < currentMax)
+                        {
+                            newMax = currentMax;
+                            //get the numbers that resulted in maximal sum
+                            //store number resulting in max sum
+                            temp_ndx = seq_ndx;
+                            for (int max_nums = 0; max_nums < K; max_nums++)
+                            {
+                                Max_Sum_Numbers[max_nums] = arr7[temp_ndx++];
+                            }
+                        }
+                    }
+                    Console.WriteLine("The maximal sum is : " + "{0}", newMax);
+                    Console.WriteLine("The numbers that produce the maximum sum in the sequence are:");
+                    foreach (int numbers in Max_Sum_Numbers)
+                    {
+                        Console.WriteLine(numbers);
+                    }
+                }
+                else Console.WriteLine("\nPlease enter a valid input for evaluation\n");
+
+            } while ((K < N) && (K > 1));
+
+            ////////8.//////////////
+            //Sorting an array means to arrange its elements in an increasing(or decreasing) order.Write a program, 
+            //which sorts an array using the algorithm "selection sort".
+                char cont;
+            do
+            {
+                Console.WriteLine("How many elements would you like to sort?");
+                int num_elements = int.Parse(Console.ReadLine()), min_element_ndx;
+
+                int[] unsorted_arr8 = new int[num_elements];
+
+                Console.WriteLine("Enter the elements you would like to sort:");
+                for (int i = 0; i < num_elements; i++)
+                {
+                    unsorted_arr8[i] = int.Parse(Console.ReadLine());
+                }
+
+                //Sort the array in increasing order
+                for (int ndx = 0; ndx < num_elements - 1; ndx++)
+                {
+                    //Find the minimum value index in the array assuming first element is minimum
+                    min_element_ndx = ndx;
+                    for (int arr_ndx = ndx + 1; arr_ndx < num_elements; arr_ndx++)
+                    {
+                        if (unsorted_arr8[arr_ndx] < unsorted_arr8[min_element_ndx])
+                        {
+                            min_element_ndx = arr_ndx;
+
+                        }
+                    }
+                    //swap the found minimum value with the pivot value in question
+                    Swap8(unsorted_arr8, ndx, min_element_ndx);
+                }
+                Console.WriteLine("The sorted array is shown below:");
+                for (int print = 0; print < unsorted_arr8.Length; print++)
+                {
+                    Console.WriteLine(unsorted_arr8[print]);
+
+                }
+
+                Console.WriteLine("Would you like to continue sorting values? Enter 'Y' to continue and 'N' or any other key to exit");
+
+                cont = char.Parse(Console.ReadLine());
+
+            } while (cont == 'Y');
+        }
+
+        //Swaps two elements of an array given indexes
+            private static void Swap8(int[] arr_swap, int first_element, int second_element)
+        {
+            int temp_element = arr_swap[first_element];
+
+            arr_swap[first_element] = arr_swap[second_element];
+            arr_swap[second_element] = temp_element;
+        }
